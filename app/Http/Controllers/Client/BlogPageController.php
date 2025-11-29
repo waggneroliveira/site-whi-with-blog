@@ -97,7 +97,7 @@ class BlogPageController extends Controller
     public function blogInner($slug = null)
     {
         if (!$slug) {
-            abort(404);
+            return view('client.errors.404');
         }
 
         $blogInner = Blog::with([
@@ -113,7 +113,7 @@ class BlogPageController extends Controller
         ->first();
 
         if (!$blogInner) {
-            abort(404);
+            return view('client.errors.404');
         }
 
         // Buscar relacionados da mesma categoria
