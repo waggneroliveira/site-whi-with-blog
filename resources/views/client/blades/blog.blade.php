@@ -1,47 +1,5 @@
 @extends('client.core.client')
 @section('content')
-<!-- Pop-up -->
-@if (isset($popUp))
-   <div id="popup" class="popup" style="display: flex;">
-      <div class="popup-content">
-         <span class="close-btn font-24 rethink-sans-bold">x</span>
-         @if ($popUp->link != null)            
-            <a href="{{ $popUp->link }}" target="_blank" rel="noopener noreferrer">
-               <img 
-                  src="{{ asset('storage/' . $popUp->path_image) }}" 
-                  alt="Pop-up"
-                  fetchpriority="high" 
-                  width="500" 
-                  height="auto"
-                  decoding="async"
-                  loading="eager"
-               />
-            </a>
-            @else
-            <img 
-               src="{{ asset('storage/' . $popUp->path_image) }}" 
-               alt="Pop-up"
-               fetchpriority="high" 
-               width="500" 
-               height="auto"
-               decoding="async"
-               loading="eager"
-            />
-         @endif
-
-      </div>
-   </div>
-   <script defer>
-      document.addEventListener("DOMContentLoaded", function () {
-         let popup = document.getElementById("popup");
-         let closeBtn = document.querySelector(".close-btn");
-         popup.style.display = "flex";
-         closeBtn.addEventListener("click", () => popup.style.display = "none");
-         window.addEventListener("click", (e) => { if (e.target === popup) popup.style.display = "none"; });
-      });
-   </script>
-@endif
-
 <section class="blog mb-5">
    <div class="banner-inner position-relative">
       <div class="max-width m-auto">

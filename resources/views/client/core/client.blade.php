@@ -153,12 +153,13 @@
             <a href="https://www.instagram.com/agenciawhi" aria-label="Visite nosso Instagram" target="_blank" class="instagram rounded-circle d-flex justify-content-center align-items-center"><i class="bi bi-instagram"></i></a>
             <a href="https://wa.me/5571992768360" aria-label="Converse no WhatsApp" target="_blank" class="whatsapp rounded-circle d-flex justify-content-center align-items-center"><i class="bi bi-whatsapp"></i></a>
         </div>
+
     </header>
 
     @include('client/includes/lgpd/lgpd')
 
     <a
-        href="https://wa.me/555571992768360?text=Olá! Encontrei seu site e gostaria de conhecer mais sobre os planos disponíveis.%0A"
+        href="https://wa.me/5571992768360?text=Ol%C3%A1%2C%20encontrei%20o%20site%20de%20voc%C3%AAs%20e%20gostaria%20de%20conhecer%20mais%20sobre%20os%20servi%C3%A7os%20dispon%C3%ADveis%20para%20a%20minha%20empresa"
         class="whatsapp-float"
         aria-label="Fale conosco no WhatsApp"
         target="_blank"
@@ -209,6 +210,7 @@
             .whatsapp-float:hover{ transform: translateY(-50%); }
         }
     </style>
+
     <!-- Modal de Login -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -406,6 +408,48 @@
             </div>
         </div>
     </div>
+    
+    <!-- Pop-up -->
+    @if (isset($popUp))
+        <div id="popup" class="popup" style="display: flex;">
+            <div class="popup-content">
+                <span class="close-btn font-24 rethink-sans-bold">x</span>
+                @if ($popUp->link != null)            
+                    <a href="{{ $popUp->link }}" target="_blank" rel="noopener noreferrer">
+                    <img 
+                        src="{{ asset('storage/' . $popUp->path_image) }}" 
+                        alt="Pop-up"
+                        fetchpriority="high" 
+                        width="500" 
+                        height="auto"
+                        decoding="async"
+                        loading="eager"
+                    />
+                    </a>
+                    @else
+                    <img 
+                    src="{{ asset('storage/' . $popUp->path_image) }}" 
+                    alt="Pop-up"
+                    fetchpriority="high" 
+                    width="500" 
+                    height="auto"
+                    decoding="async"
+                    loading="eager"
+                    />
+                @endif
+
+            </div>
+        </div>
+        <script defer>
+            document.addEventListener("DOMContentLoaded", function () {
+                let popup = document.getElementById("popup");
+                let closeBtn = document.querySelector(".close-btn");
+                popup.style.display = "flex";
+                closeBtn.addEventListener("click", () => popup.style.display = "none");
+                window.addEventListener("click", (e) => { if (e.target === popup) popup.style.display = "none"; });
+            });
+        </script>
+    @endif
 
     <main>
         @yield('content') 

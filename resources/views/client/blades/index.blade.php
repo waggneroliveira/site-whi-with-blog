@@ -735,7 +735,7 @@ Fale com a gente!
                     Tenha acesso a nossa disponibilidade e agende uma vídeo conferência com o nosso time 
                     que entenderá a fundo sobre a sua necessidade
                 </p>
-                <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ314UlBP0vKZFJm6SIrz-GrMY4D8U3mjWihIKcN9PrL0msuuZ2WnFum5cO3eTMISHOB9csIzmeH" 
+                <a href="https://calendar.app.google/QaceYPv7GBbA9YNg9" 
                 target="_blank" class="btn btn-lg rethink-sans-semiBold text-p text-uppercase call-to-action d-flex justify-content-center align-items-center" rel="noopener noreferrer">
                     Agendar agora
                 </a>
