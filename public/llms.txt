@@ -1,0 +1,28 @@
+# llms.txt — regras para crawlers e IAs  
+# Domínio: whi.dev.br
+
+# 1) Bloquear uso para treinamento por bots de IA conhecidos  
+User-Agent: GPTBot  
+Disallow: /
+
+User-Agent: Google-Extended  
+Disallow: /
+
+User-Agent: AnthropicAI  
+Disallow: /
+
+User-Agent: PerplexityBot  
+Disallow: /
+
+# 2) Permitir acesso para navegação normal / indexação  
+User-Agent: *  
+Allow: /  
+Crawl-Delay: 5
+
+# 3) Páginas sensíveis (admin, login, painel) — opcional.  
+# Uncomment se você tiver área restrita em /admin, /login, /wp-admin etc.  
+#User-Agent: *  
+#Disallow: /admin/  
+#Disallow: /login/  
+#Disallow: /painel/ 
+ 

@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="theme-color" content="#0d0d0d">
-    <meta name="description" content="Criação de sites, lojas virtuais e estratégias de marketing digital em Salvador. A WHI desenvolve soluções profissionais e personalizadas para o seu negócio crescer online.">
+    <meta name="description" content="Criação de sites, lojas virtuais e estratégias de marketing digital em Salvador. A WHI desenvolve soluções profissionais para fazer seu negócio crescer online.">
     <meta name="keywords" content="Agência de marketing Salvador, criação de sites Salvador, marketing digital, desenvolvimento web, loja virtual, SEO local, redes sociais, tráfego pago, Google Ads, branding, identidade visual, WHI">
-    <title>WHI | Agência de Marketing Digital e Criação de Sites em Salvador</title>
+    <title>WHI | Marketing Digital e Criação de Sites em Salvador</title>
     @if(isset($blogInner))
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:type" content="article">
@@ -25,13 +25,13 @@
     @else
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:type" content="website">
-        <meta property="og:title" content="WHI | Agência de Marketing Digital e Criação de Sites em Salvador">
+        <meta property="og:title" content="WHI | Marketing Digital e Criação de Sites em Salvador">
         <meta property="og:description" content="Soluções digitais completas em Salvador: sites profissionais, marketing de performance, identidade visual e presença online com a WHI.">
         <meta property="og:image" content="{{asset('build/client/images/compartilhamento.png')}}">
 
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:url" content="{{ url()->current() }}">
-        <meta name="twitter:title" content="WHI | Agência de Marketing Digital e Criação de Sites em Salvador">
+        <meta name="twitter:title" content="WHI | Marketing Digital e Criação de Sites em Salvador">
         <meta name="twitter:description" content="Soluções digitais completas em Salvador: sites profissionais, marketing de performance, identidade visual e presença online com a WHI.">
         <meta name="twitter:image" content="{{asset('build/client/images/compartilhamento.png')}}">
     @endif
