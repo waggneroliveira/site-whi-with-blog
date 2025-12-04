@@ -1,6 +1,5 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    <!-- RewriteBase /homologacao/ -->
 
     # Redireciona requisições para index.php
     RewriteCond %{REQUEST_FILENAME} !-f
