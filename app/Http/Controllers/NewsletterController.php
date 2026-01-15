@@ -62,69 +62,64 @@ class NewsletterController extends Controller
     //     }
     // }
 
-    public function store(Request $request)
-    {
-        // Headers CORS para permitir requisições cross-domain
-        $allowedOrigin = 'https://whi.dev.br/lp-delivery'; // Substitua pelo domínio do seu site estático
-        $origin = $request->header('Origin');
-        
-        // Se o origin estiver na lista de permitidos ou for localhost para testes
-        if (in_array($origin, [$allowedOrigin, 'http://localhost:8000', 'http://127.0.0.1:8000'])) {
-            header("Access-Control-Allow-Origin: $origin");
-        }
-        
+public function store(Request $request)
+{
+    // Para requests do mesmo domínio (www.whi.dev.br -> whi.dev.br)
+    $origin = $request->header('Origin');
+    $allowedOrigins = ['https://www.whi.dev.br', 'https://whi.dev.br'];
+    
+    if (in_array($origin, $allowedOrigins)) {
+        header("Access-Control-Allow-Origin: $origin");
+    }
+    
+    // Lidar com preflight OPTIONS
+    if ($request->isMethod('OPTIONS')) {
         header('Access-Control-Allow-Methods: POST, OPTIONS');
         header('Access-Control-Allow-Headers: Content-Type, Accept, X-Requested-With');
-        header('Access-Control-Allow-Credentials: true');
-        header('Access-Control-Max-Age: 86400'); // 24 horas
-        
-        // Se for uma requisição OPTIONS (preflight), retornar sucesso
-        if ($request->isMethod('OPTIONS')) {
-            return response()->json([], 200);
-        }
-        
-        // Validação
-        $validated = $request->validate([
-            'email' => 'required|email',
-            'term_privacy' => 'accepted',
+        return response()->json([], 200);
+    }
+    
+    // Validação
+    $validated = $request->validate([
+        'email' => 'required|email',
+        'term_privacy' => 'accepted',
+    ]);
+    
+    // Verificar se email já existe
+    if (Newsletter::where('email', $validated['email'])->exists()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Este email já está cadastrado!',
+        ], 422);
+    }
+    
+    try {
+        DB::beginTransaction();
+
+        Newsletter::create([
+            'email' => $validated['email'],
+            'term_privacy' => 1,
+        ]);
+
+        DB::commit();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Cadastro realizado com sucesso!',
         ]);
         
-        // Verificar se o email já existe
-        $existing = Newsletter::where('email', $validated['email'])->first();
-        if ($existing) {
-            return response()->json([
-                'error' => true,
-                'message' => 'Este email já está cadastrado em nossa newsletter.',
-            ], 422);
-        }
-        
-        try {
-            DB::beginTransaction();
+    } catch (\Exception $e) {
+        DB::rollBack();
 
-            Newsletter::create([
-                'email' => $validated['email'],
-                'term_privacy' => 1,
-                'ip_address' => $request->ip(),
-                'user_agent' => $request->header('User-Agent'),
-            ]);
+        // Log do erro para debugging
+        \Log::error('Erro newsletter: ' . $e->getMessage());
 
-            DB::commit();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Cadastro realizado com sucesso!',
-            ], 201);
-            
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return response()->json([
-                'error' => true,
-                'message' => 'Ocorreu um erro ao cadastrar. Por favor, tente novamente.',
-                'details' => env('APP_DEBUG') ? $e->getMessage() : null
-            ], 500);
-        }
+        return response()->json([
+            'error' => true,
+            'message' => 'Ocorreu um erro ao cadastrar. Por favor, tente novamente.',
+        ], 500);
     }
+}
 
     public function destroy(Newsletter $newsletter)
     {
