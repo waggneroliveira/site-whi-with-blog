@@ -30,96 +30,39 @@ class NewsletterController extends Controller
         return view('admin.blades.newsletter.index', compact('newsletters'));
     }
  
-    // public function store(Request $request)
-    // {
-    //     $validated = $request->validate([
-    //         'email' => 'required|email',
-    //         'term_privacy' => 'accepted',
-    //     ]);
-
-    //     try {
-    //         DB::beginTransaction();
-
-    //         Newsletter::create([
-    //             'email' => $validated['email'],
-    //             'term_privacy' => 1,
-    //         ]);
-
-    //         DB::commit();
-
-    //         return response()->json([
-    //             'success' => true,
-    //             'message' => 'Cadastro realizado com sucesso!',
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         DB::rollBack();
-
-    //         return response()->json([
-    //             'error' => true,
-    //             'message' => 'Ocorreu um erro ao cadastrar. Por favor, tente novamente.',
-    //             'details' => $e->getMessage()
-    //         ], 500);
-    //     }
-    // }
-
-public function store(Request $request)
-{
-    // Para requests do mesmo domínio (www.whi.dev.br -> whi.dev.br)
-    $origin = $request->header('Origin');
-    $allowedOrigins = ['https://www.whi.dev.br', 'https://whi.dev.br'];
-    
-    if (in_array($origin, $allowedOrigins)) {
-        header("Access-Control-Allow-Origin: $origin");
-    }
-    
-    // Lidar com preflight OPTIONS
-    if ($request->isMethod('OPTIONS')) {
-        header('Access-Control-Allow-Methods: POST, OPTIONS');
-        header('Access-Control-Allow-Headers: Content-Type, Accept, X-Requested-With');
-        return response()->json([], 200);
-    }
-    
-    // Validação
-    $validated = $request->validate([
-        'email' => 'required|email',
-        'term_privacy' => 'accepted',
-    ]);
-    
-    // Verificar se email já existe
-    if (Newsletter::where('email', $validated['email'])->exists()) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Este email já está cadastrado!',
-        ], 422);
-    }
-    
-    try {
-        DB::beginTransaction();
-
-        Newsletter::create([
-            'email' => $validated['email'],
-            'term_privacy' => 1,
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'term_privacy' => 'accepted',
         ]);
 
-        DB::commit();
+        try {
+            DB::beginTransaction();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Cadastro realizado com sucesso!',
-        ]);
-        
-    } catch (\Exception $e) {
-        DB::rollBack();
+            Newsletter::create([
+                'email' => $validated['email'],
+                'term_privacy' => 1,
+            ]);
 
-        // Log do erro para debugging
-        \Log::error('Erro newsletter: ' . $e->getMessage());
+            DB::commit();
 
-        return response()->json([
-            'error' => true,
-            'message' => 'Ocorreu um erro ao cadastrar. Por favor, tente novamente.',
-        ], 500);
+            return response()->json([
+                'success' => true,
+                'message' => 'Cadastro realizado com sucesso!',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'error' => true,
+                'message' => 'Ocorreu um erro ao cadastrar. Por favor, tente novamente.',
+                'details' => $e->getMessage()
+            ], 500);
+        }
     }
-}
+
+
 
     public function destroy(Newsletter $newsletter)
     {
