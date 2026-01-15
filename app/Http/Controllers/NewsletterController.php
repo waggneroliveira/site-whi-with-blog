@@ -65,7 +65,7 @@ class NewsletterController extends Controller
     public function store(Request $request)
     {
         // Headers CORS para permitir requisições cross-domain
-        $allowedOrigin = 'https://seusiteestatico.com'; // Substitua pelo domínio do seu site estático
+        $allowedOrigin = 'https://whi.dev.br/lp-delivery'; // Substitua pelo domínio do seu site estático
         $origin = $request->header('Origin');
         
         // Se o origin estiver na lista de permitidos ou for localhost para testes
