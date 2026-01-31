@@ -1,8 +1,39 @@
+# robots.txt otimizado para IAs
+# Domínio: whi.dev.br
+# Última atualização: 2026-Q1
+
+# PERMISSÃO GERAL para todos os crawlers
 User-agent: *
-Disallow:
+Allow: /
+Crawl-delay: 2
+Sitemap: https://whi.dev.br/sitemap.xml
 
-User-agent: facebookexternalhit
-Disallow:
+# CRAWLERS DE IA (reforço positivo)
+User-agent: GPTBot
+Allow: /
+Crawl-delay: 1
 
-User-agent: facebot
-Disallow:
+User-agent: Google-Extended
+Allow: /
+Crawl-delay: 1
+
+User-agent: Claude-Web
+Allow: /
+Crawl-delay: 1
+
+User-agent: PerplexityBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: CCBot
+Allow: /
+Crawl-delay: 1
+
+# BLOQUEIOS NECESSÁRIOS (para TODOS os user-agents)
+User-agent: *
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /login/
+Disallow: /private/
+Disallow: /cgi-bin/
+Disallow: /config/
