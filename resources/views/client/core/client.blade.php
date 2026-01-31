@@ -35,7 +35,7 @@
         <meta name="twitter:description" content="Soluções digitais completas em Salvador: sites profissionais, marketing de performance, identidade visual e presença online com a WHI.">
         <meta name="twitter:image" content="{{asset('build/client/images/compartilhamento.png')}}">
     @endif
-    <link rel="canonical" href="https://whi.dev.br/">
+    <link rel="canonical" href="{{ url()->current() }}">
     <meta name="copyright" content="Direitos reservados WHI">
     <meta name="author" content="WHI">
     <meta name="google-site-verification" content="kpN-gFJ5IGqEAXcdrwnTxAcJXZF-LsaP3bPwONwcvsY" />
